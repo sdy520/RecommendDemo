@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">河南历史游</string>
+    <string name="exit_app">再按一次返回退出程序</string>
+    <string name="username_hint">输入账号</string>
+    <string name="username_input">账号</string>
+    <string name="password_hint">输入密码</string>
+    <string name="password_input">密码</string>
+    <string name="opt_remember">自动登录</string>
+    <string name="login">登录</string>
+    <string name="zhuce">注册</string>
+</resources>

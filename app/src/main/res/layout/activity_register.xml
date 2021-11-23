@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F8FF">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        app:title="河南历史游"
+        app:titleTextColor="@color/white"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="用户名:"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:textColor="#080808"
+            android:gravity="center_horizontal"/>
+        <EditText
+            android:id="@+id/register_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="请输入用户名"
+            android:padding="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="密    码:"
+            android:textColor="#080808"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:gravity="center_horizontal"/>
+        <EditText
+            android:id="@+id/register_password1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="请输入密码"
+            android:padding="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="密    码:"
+            android:textColor="#080808"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:gravity="center_horizontal"/>
+        <EditText
+            android:id="@+id/register_password2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="请确认密码"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/holo_orange_dark"
+        android:text="立即注册"
+        android:textColor="#ffffff"/>
+</LinearLayout>
