@@ -1,9 +1,11 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
+
+import com.example.recommenddemo.R;
 import com.example.recommenddemo.base.BaseActivity;
 
 import java.util.Timer;
@@ -23,7 +25,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }

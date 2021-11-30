@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.bean;
 
 public class UserAccountBean {
     private String userName;

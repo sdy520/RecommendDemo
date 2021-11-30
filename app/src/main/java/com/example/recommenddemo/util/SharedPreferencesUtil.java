@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

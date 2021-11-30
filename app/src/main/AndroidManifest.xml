@@ -13,19 +13,19 @@
         android:theme="@style/Theme.RecommendDemo"
         tools:targetApi="m">
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".ChooseActivity">
         </activity>
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".ui.RegisterActivity">
         </activity>
-        <activity android:name=".LoginActivity">
-
+        <activity android:name=".ui.LoginActivity">
+        </activity>
+        <activity android:name=".CalendarActivity">
         </activity>
     </application>
 

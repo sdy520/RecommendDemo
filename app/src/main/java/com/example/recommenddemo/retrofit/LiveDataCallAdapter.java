@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.retrofit;
 
 import androidx.lifecycle.LiveData;
 

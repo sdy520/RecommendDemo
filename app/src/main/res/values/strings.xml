@@ -8,4 +8,14 @@
     <string name="opt_remember">自动登录</string>
     <string name="login">登录</string>
     <string name="zhuce">注册</string>
+    <string-array name="day_array">
+        <item>三天</item>
+        <item>四天</item>
+        <item>五天</item>
+        <item>六天</item>
+        <item>七天</item>
+        <item>八天</item>
+        <item>九天</item>
+        <item>十天</item>
+    </string-array>
 </resources>

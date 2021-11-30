@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.api;
 
 import androidx.lifecycle.LiveData;
 

@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.ui;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -10,25 +10,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 
+import com.example.recommenddemo.retrofit.LiveDataCallAdapterFactory;
+import com.example.recommenddemo.api.RegisterApi;
 import com.example.recommenddemo.base.BaseActivity;
+import com.example.recommenddemo.config.APPCONST;
 import com.example.recommenddemo.databinding.ActivityRegisterBinding;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RegisterActivity extends BaseActivity {
     ActivityRegisterBinding registerBinding;

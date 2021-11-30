@@ -1,9 +1,7 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.ui;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,24 +11,19 @@ import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 
+import com.example.recommenddemo.ChooseActivity;
+import com.example.recommenddemo.retrofit.LiveDataCallAdapterFactory;
+import com.example.recommenddemo.api.LoginApi;
 import com.example.recommenddemo.base.BaseActivity;
+import com.example.recommenddemo.config.APPCONST;
 import com.example.recommenddemo.databinding.ActivityLoginBinding;
+import com.example.recommenddemo.util.SharedPreferencesUtil;
 
-
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.Objects;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoginActivity extends BaseActivity {
     ActivityLoginBinding loginBinding;
@@ -75,7 +68,7 @@ public class LoginActivity extends BaseActivity {
 
         loginBinding.loginRegister.setOnClickListener(v -> {
             Intent intent =new Intent();
-            intent.setClass(LoginActivity.this,RegisterActivity.class);
+            intent.setClass(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
         loginBinding.login.setOnClickListener(v -> {
@@ -171,7 +164,7 @@ public class LoginActivity extends BaseActivity {
                 case 1:
                     loginBinding.pbLoading.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
+                    Intent intent1 = new Intent(LoginActivity.this, ChooseActivity.class);
                     startActivity(intent1);
                     break;
                 case 2:
@@ -191,23 +184,27 @@ public class LoginActivity extends BaseActivity {
     };
 
     private void OptionHandle(String username,String pwd){
-        SharedPreferences.Editor editor = getSharedPreferences("UserData",MODE_PRIVATE).edit();
+        //SharedPreferences.Editor editor = getSharedPreferences("UserData",MODE_PRIVATE).edit();
         SharedPreferencesUtil spu = new SharedPreferencesUtil(this);
         if(loginBinding.loginRememberPassword.isChecked()){
-            editor.putBoolean("isRememberPassword",true);
+            spu.setParam("isRememberPassword",true);
+            //editor.putBoolean("isRememberPassword",true);
             // 保存账号密码
             spu.setParam("account",username);
             spu.setParam("password",pwd);
         }else{
-            editor.putBoolean("isRememberPassword",false);
+            spu.setParam("isRememberPassword",false);
+            //editor.putBoolean("isRememberPassword",false);
         }
 
         if(loginBinding.loginRememberAutologin.isChecked()){
-            editor.putBoolean("isAutoLogin",true);
+            spu.setParam("isAutoLogin",true);
+            //editor.putBoolean("isAutoLogin",true);
         }else{
-            editor.putBoolean("isAutoLogin",false);
+            spu.setParam("isAutoLogin",false);
+            //editor.putBoolean("isAutoLogin",false);
         }
-        editor.apply();
+        //editor.apply();
     }
 
     /**
