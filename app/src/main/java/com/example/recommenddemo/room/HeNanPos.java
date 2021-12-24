@@ -36,7 +36,7 @@ public class HeNanPos implements Comparable, Serializable {
     private int qing;
     private float play_time;
     private float recommend_score;
-
+    private int day;
     public String getName() {
         return name;
     }
@@ -245,6 +245,14 @@ public class HeNanPos implements Comparable, Serializable {
         this.recommend_score = recommend_score;
     }
 
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
     public HeNanPos(Double longitude, Double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
@@ -279,6 +287,7 @@ public class HeNanPos implements Comparable, Serializable {
                 ", qing=" + qing +
                 ", play_time=" + play_time +
                 ", recommend_score=" + recommend_score +
+                ", day=" + day +
                 '}';
     }
 

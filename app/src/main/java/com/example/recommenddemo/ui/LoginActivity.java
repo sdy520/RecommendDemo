@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 
-import com.example.recommenddemo.ChooseActivity;
+import com.example.recommenddemo.CalendarActivity;
 import com.example.recommenddemo.retrofit.LiveDataCallAdapterFactory;
 import com.example.recommenddemo.api.LoginApi;
 import com.example.recommenddemo.base.BaseActivity;
@@ -30,7 +30,7 @@ public class LoginActivity extends BaseActivity {
     private String account;
     private String password;
     private Retrofit mRetrofit;
-
+    private SharedPreferencesUtil spu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity {
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build();
         // 自动填充
-        SharedPreferencesUtil spu = new SharedPreferencesUtil(this);
+        spu = new SharedPreferencesUtil(this);
         Boolean isRememberPassword = (Boolean) spu.getParam("isRememberPassword",false);
         Boolean isAutoLogin = (Boolean) spu.getParam("isAutoLogin",false);
         // SharedPreference获取用户账号密码，存在则填充
@@ -101,14 +101,24 @@ public class LoginActivity extends BaseActivity {
                         try {
                             body = responseBody.string();
                             Log.e(TAG,body);
-                            if(body.equals("100")) {
-                                handler.sendMessage(handler.obtainMessage(1));
-                            }else if(body.equals("201")) {
-                                handler.sendMessage(handler.obtainMessage(2));
-                            }else if(body.equals("202")){
-                                handler.sendMessage(handler.obtainMessage(3));
-                            }else if(body.equals("300")){
-                                handler.sendMessage(handler.obtainMessage(4));
+                            Boolean isChoose = (Boolean) spu.getParam("isChoose",false);
+                            switch (body) {
+                                case "100":
+                                    if (isChoose) {
+                                        handler.sendMessage(handler.obtainMessage(6));
+                                    } else {
+                                        handler.sendMessage(handler.obtainMessage(1));
+                                    }
+                                    break;
+                                case "201":
+                                    handler.sendMessage(handler.obtainMessage(2));
+                                    break;
+                                case "202":
+                                    handler.sendMessage(handler.obtainMessage(3));
+                                    break;
+                                case "300":
+                                    handler.sendMessage(handler.obtainMessage(4));
+                                    break;
                             }
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
@@ -159,12 +169,13 @@ public class LoginActivity extends BaseActivity {
     {
         public void handleMessage(Message msg)
         {
+            Intent intent1;
             switch(msg.what)
             {
                 case 1:
                     loginBinding.pbLoading.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(LoginActivity.this, ChooseActivity.class);
+                    intent1 = new Intent(LoginActivity.this, ChooseActivity.class);
                     startActivity(intent1);
                     break;
                 case 2:
@@ -179,13 +190,19 @@ public class LoginActivity extends BaseActivity {
                 case 5:
                     Toast.makeText(getApplicationContext(), "网络连接错误", Toast.LENGTH_SHORT).show();
                     break;
+                case 6:
+                    loginBinding.pbLoading.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    intent1 = new Intent(LoginActivity.this, CalendarActivity.class);
+                    startActivity(intent1);
+                    break;
             }
         }
     };
 
     private void OptionHandle(String username,String pwd){
         //SharedPreferences.Editor editor = getSharedPreferences("UserData",MODE_PRIVATE).edit();
-        SharedPreferencesUtil spu = new SharedPreferencesUtil(this);
+       // SharedPreferencesUtil spu = new SharedPreferencesUtil(this);
         if(loginBinding.loginRememberPassword.isChecked()){
             spu.setParam("isRememberPassword",true);
             //editor.putBoolean("isRememberPassword",true);

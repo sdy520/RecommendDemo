@@ -1,4 +1,4 @@
-package com.example.recommenddemo;
+package com.example.recommenddemo.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,12 +15,18 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.recommenddemo.CalendarActivity;
+import com.example.recommenddemo.KMean;
+import com.example.recommenddemo.R;
 import com.example.recommenddemo.app.ActivityManage;
 import com.example.recommenddemo.base.BaseActivity;
 import com.example.recommenddemo.databinding.ActivityChooseBinding;
+import com.example.recommenddemo.room.CalendarHeNanPosDao;
+import com.example.recommenddemo.room.CalendarHeNanPosDatabase;
 import com.example.recommenddemo.room.HeNanPos;
 import com.example.recommenddemo.room.HeNanPosDao;
 import com.example.recommenddemo.room.HeNanPosDatabase;
+import com.example.recommenddemo.util.SharedPreferencesUtil;
 import com.example.recommenddemo.viewmodel.ShareViewModelProvider;
 import com.example.recommenddemo.viewmodel.SharedCalendarViewModel;
 
@@ -41,6 +47,7 @@ public class ChooseActivity extends BaseActivity {
     int[] numberDay ={3,4,5,6,7,8,9,10};
     int chooseDay;
     HeNanPosDao heNanPosDao;
+    CalendarHeNanPosDao calendarHeNanPosDao;
     List<HeNanPos> heNanPosList;
     HashMap<Integer, List<HeNanPos>> clusters;
     private SharedCalendarViewModel sharedCalendarViewModel = ShareViewModelProvider.get(this,SharedCalendarViewModel.class);;
@@ -50,8 +57,8 @@ public class ChooseActivity extends BaseActivity {
         chooseBinding = ActivityChooseBinding.inflate(getLayoutInflater());
         setContentView(chooseBinding.getRoot());
 
-
         heNanPosDao = HeNanPosDatabase.getDatabase(this).getPosDao();
+        calendarHeNanPosDao = CalendarHeNanPosDatabase.getDatabase(this).getCalendarPosDao();
         daies = getResources().getStringArray(R.array.day_array);
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,R.array.day_array, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -77,6 +84,7 @@ public class ChooseActivity extends BaseActivity {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void run() {
+                        SharedPreferencesUtil sp = new SharedPreferencesUtil(getApplicationContext());
                         heNanPosList = heNanPosDao.getAllHeNanPos(dynasties[0],dynasties[1],dynasties[2],dynasties[3],dynasties[4],dynasties[5],dynasties[6],dynasties[7],
                                 dynasties[8],dynasties[9],dynasties[10],dynasties[11],dynasties[12],cityList);
                         KMean kMean = new KMean(numberDay[chooseDay],heNanPosList);
@@ -89,14 +97,20 @@ public class ChooseActivity extends BaseActivity {
                                 float recommend_score = (float) (heNanPos.getXiashangzhou()*0.077+heNanPos.getChunqiuzhanguo()*0.077+heNanPos.getQin()*0.077+heNanPos.getHan()*0.077+heNanPos.getSanguo()*0.077+heNanPos.getJin()*0.077
                                         + heNanPos.getNanbeichao()*0.077+heNanPos.getSui()*0.077+heNanPos.getTang()*0.077+heNanPos.getSong()*0.077+heNanPos.getYuan()*0.077+heNanPos.getMing()*0.077+heNanPos.getQing()*0.077);
                                 heNanPos.setRecommend_score(recommend_score);
+                                heNanPos.setDay(i);
                             }
+                            //按评分大小倒序排列每天的景点
                             Collections.sort(heNanPosList1);
                             Collections.reverse(heNanPosList1);
+                            //将排序后数据再存入hashmap
                             clusters.replace(i,heNanPosList1);
+                            //数据存入日程数据库中，用于后续记住行程数据
+                            calendarHeNanPosDao.insertCalendarHeNanPos(heNanPosList1);
                         }
+
                         handler.sendMessage(handler.obtainMessage(1));
-                        Intent intent = new Intent(ChooseActivity.this,CalendarActivity.class);
-                        intent.putExtra("day",numberDay[chooseDay]);
+                        sp.setParam("day",numberDay[chooseDay]);
+                        Intent intent = new Intent(ChooseActivity.this, CalendarActivity.class);
                         startActivity(intent);
                     }
                 }).start();

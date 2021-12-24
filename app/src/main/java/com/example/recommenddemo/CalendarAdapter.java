@@ -48,14 +48,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_pos_item,parent,false);
         ViewHolder holder = new ViewHolder(view);
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                String name = mbookList.get(position).getBook_name();
-                Log.e("dd",name);
-            }
-        });*/
+
         return holder;
     }
 
@@ -72,17 +65,29 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         holder.textView3.setText(heNanPos.getIntro());
         holder.textView4.setText(heNanPos.getCity_name());
         holder.textView5.setText(String.valueOf(heNanPos.getRating()));
+        if(mOnItemClickListener!=null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.itemView, holder.getAdapterPosition());
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickListener.onItemLongClick(holder.itemView, holder.getAdapterPosition());
+                    //在longClickListener中return true，消费掉事件，不然会同时触发click事件
+                    return true;
+                }
+            });
+        }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mOnItemClickListener!=null)
-                    mOnItemClickListener.onItemClick(holder.itemView,holder.getAdapterPosition());
-            }
-        });
     }
 
-
+    public void removeItem(int position){
+        posList.remove(position);
+        notifyItemRemoved(position);
+    }
     @Override
     public int getItemCount() {
         return posList.size();
@@ -93,6 +98,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     //2.定义接口：点击事件
     public interface OnItemClickListener {
         void onItemClick(View view, int position);//单击
+        void onItemLongClick(View view, int position);//长按
     }
     //3.设置接口接收的方法
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

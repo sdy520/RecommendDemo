@@ -4,12 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/exit"
         android:title="退出登录"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/more"
+        android:id="@+id/reset"
         android:title="重置行程"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/reset_exit"
+        android:title="退出登录并重置行程"
         app:showAsAction="never" />
 </menu>

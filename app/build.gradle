@@ -52,4 +52,11 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    //搜索功能
+    implementation 'com.amap.api:search:7.6.0'
+    //导航
+    implementation 'com.amap.api:navi-3dmap:8.0.0_3dmap8.0.0'
+    //定位功能
+    implementation 'com.amap.api:location:5.4.0'
 }

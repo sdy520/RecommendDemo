@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.recommenddemo.CheckPermissionsActivity;
 import com.example.recommenddemo.app.ActivityManage;
 
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends CheckPermissionsActivity {
     //获取TAG的activity名称
     protected final String TAG = this.getClass().getSimpleName();
 
